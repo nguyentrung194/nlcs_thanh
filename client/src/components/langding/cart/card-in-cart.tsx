@@ -50,16 +50,25 @@ export const CardInCart = ({ product }: any) => {
           Roadster Women Solid Top
         </Typography>
         <Typography className="p-0 text-left" variant="inherit">
-          {`${(300000).toLocaleString("it-IT", {
+          Price:{" "}
+          {product.price.toLocaleString("it-IT", {
+            style: "currency",
+            currency: "VND",
+          })}
+        </Typography>
+        <Typography className="p-0 text-left" variant="inherit">
+          Total of item:{" "}
+          {`${(
+            product.price *
+            (cartItems[
+              cartItems.findIndex((item: any) => item.id === product.id)
+            ]?.soluong || 0)
+          ).toLocaleString("it-IT", {
             style: "currency",
             currency: "VND",
           })}`}
         </Typography>
-        <Typography className="p-0 text-left" variant="inherit">
-          3 pc(s)
-        </Typography>
       </div>
-      <Box className="">300$</Box>
       <Box className="">
         <Chip
           label="Xoa"

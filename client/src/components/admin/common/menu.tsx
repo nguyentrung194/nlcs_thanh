@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 const ITEM_HEIGHT = 48;
 
-export const MenuCustom = ({ optionsBooking }: any) => {
+export const MenuCustom = ({ optionsOrder }: any) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
@@ -59,7 +59,7 @@ export const MenuCustom = ({ optionsBooking }: any) => {
           },
         }}
       >
-        {optionsBooking.map(
+        {optionsOrder.map(
           (option: { key: string; path: string; text: string }) => (
             <MenuItem
               key={option.key}
@@ -77,7 +77,7 @@ export const MenuCustom = ({ optionsBooking }: any) => {
   );
 };
 
-export const MenuCustomHead = ({ optionsBooking }: any) => {
+export const MenuCustomHead = ({ options }: any) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
@@ -118,7 +118,7 @@ export const MenuCustomHead = ({ optionsBooking }: any) => {
           },
         }}
       >
-        {optionsBooking.map(
+        {options.map(
           (option: { key: string; path: string; text: string }) => (
             <MenuItem
               key={option.key}
@@ -324,7 +324,7 @@ export const FilterCustom = (props: {
               {props.title}
             </Typography>
           </div>
-          <MenuCustom optionsBooking={props.selectOptions} />
+          <MenuCustom optionsOrder={props.selectOptions} />
         </div>
         {props.emailVerified ? (
           <div className="px-3">

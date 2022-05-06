@@ -15,26 +15,6 @@ import {
 import { BasicSelect } from "./common";
 import { stringAvatar } from "../../../common/lib";
 import { MenuAccount } from "./menu";
-import {
-  BookingTable,
-  RoomTable,
-  RoomTypeTable,
-  StockTable,
-  ExpensesTable,
-  BookingReportTable,
-  CustomerTable,
-  InvoicesTable,
-} from "./table";
-import {
-  bookings,
-  expenses,
-  rooms,
-  roomsTypes,
-  stocks,
-  bookingReport,
-  customers,
-  invoices,
-} from "./data";
 
 export const Card1 = (props: any) => {
   return (
@@ -169,7 +149,7 @@ export const Card4 = (props: any) => {
       <CardContent>
         <div className="flex justify-between">
           <Typography variant="h6" component="div">
-            Room Booking Chart
+            Product Order Chart
           </Typography>
           <BasicSelect />
         </div>
@@ -359,7 +339,7 @@ export const Card7 = (props: any) => {
                     color="text.secondary"
                     gutterBottom
                   >
-                    Keith Jensen requested for room.
+                    Keith Jensen requested for product.
                   </Typography>
                   <Typography
                     sx={{ fontSize: 14, margin: "8px 0 0 0" }}
@@ -376,87 +356,6 @@ export const Card7 = (props: any) => {
             </div>
           );
         })}
-      </CardContent>
-    </Card>
-  );
-};
-
-export const CardBooking = (props: any) => {
-  
-  return (
-    <Card sx={{ minWidth: 0, height: "100%" }}>
-      <CardContent>
-        <BookingTable rows={bookings} />
-      </CardContent>
-    </Card>
-  );
-};
-
-export const CardRoom = (props: any) => {
-  return (
-    <Card sx={{ minWidth: 0, height: "100%" }}>
-      <CardContent>
-        <RoomTable rows={rooms} />
-      </CardContent>
-    </Card>
-  );
-};
-
-export const CardRoomType = (props: any) => {
-  return (
-    <Card sx={{ minWidth: 0, height: "100%" }}>
-      <CardContent>
-        <RoomTypeTable rows={roomsTypes} />
-      </CardContent>
-    </Card>
-  );
-};
-
-export const CardStock = (props: any) => {
-  return (
-    <Card sx={{ minWidth: 0, height: "100%" }}>
-      <CardContent>
-        <StockTable rows={stocks} />
-      </CardContent>
-    </Card>
-  );
-};
-
-export const CardExpenses = (props: any) => {
-  return (
-    <Card sx={{ minWidth: 0, height: "100%" }}>
-      <CardContent>
-        <ExpensesTable rows={expenses} />
-      </CardContent>
-    </Card>
-  );
-};
-
-export const CardBookingReport = (props: any) => {
-  return (
-    <Card sx={{ minWidth: 0, height: "100%" }}>
-      <CardContent>
-        <BookingReportTable rows={bookingReport} />
-      </CardContent>
-    </Card>
-  );
-};
-
-export const CardCustomer = (props: any) => {
-  return (
-    <Card sx={{ minWidth: 0, height: "100%" }}>
-      <CardContent>
-        <CustomerTable rows={customers} />
-      </CardContent>
-    </Card>
-  );
-};
-
-export const CardInvoices = (props: any) => {
-  return (
-    <Card sx={{ minWidth: 0, height: "100%" }}>
-      <CardContent>
-        <InvoicesTable rows={invoices} />
       </CardContent>
     </Card>
   );

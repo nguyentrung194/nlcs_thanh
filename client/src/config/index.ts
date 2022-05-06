@@ -1,26 +1,28 @@
 const local = {
   api: "http://localhost:5000/",
   firebase: {
-    apiKey: "AIzaSyAuqc0Q-NhDtJ2BMP7gG4wSjcyN0_UFBXw",
-    authDomain: "ani-success.firebaseapp.com",
-    projectId: "ani-success",
-    storageBucket: "ani-success.appspot.com",
-    messagingSenderId: "744377030507",
-    appId: "1:744377030507:web:681182bb9abb63e63c9e2e",
-    measurementId: "G-EYLY7ZLMN7",
+    apiKey: "AIzaSyCsCRZx45U9F4G80jZ2oXgzzEScBGSfoEU",
+    authDomain: "fir-c08f7.firebaseapp.com",
+    databaseURL:
+      "https://fir-c08f7-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "fir-c08f7",
+    storageBucket: "fir-c08f7.appspot.com",
+    messagingSenderId: "67599571776",
+    appId: "1:67599571776:web:dc8324fe935b52ba9f78a5",
   },
 };
 
 const staging = {
   api: "",
   firebase: {
-    apiKey: "AIzaSyAuqc0Q-NhDtJ2BMP7gG4wSjcyN0_UFBXw",
-    authDomain: "ani-success.firebaseapp.com",
-    projectId: "ani-success",
-    storageBucket: "ani-success.appspot.com",
-    messagingSenderId: "744377030507",
-    appId: "1:744377030507:web:681182bb9abb63e63c9e2e",
-    measurementId: "G-EYLY7ZLMN7",
+    apiKey: "AIzaSyCsCRZx45U9F4G80jZ2oXgzzEScBGSfoEU",
+    authDomain: "fir-c08f7.firebaseapp.com",
+    databaseURL:
+      "https://fir-c08f7-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "fir-c08f7",
+    storageBucket: "fir-c08f7.appspot.com",
+    messagingSenderId: "67599571776",
+    appId: "1:67599571776:web:dc8324fe935b52ba9f78a5",
   },
 };
 

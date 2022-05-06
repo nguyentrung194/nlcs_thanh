@@ -1,11 +1,40 @@
 import { Button, Divider } from "@mui/material";
+import axios from "axios";
+import * as React from "react";
+import environment from "../../config";
 import { CarouselMulti } from "./carousel-multi";
 import { Cart } from "./cart/cart";
 import { Categories } from "./categoris";
 import { Product } from "./product/card";
 import { Search } from "./search";
+import { useQueryURL } from "../../hooks/use-query-url";
 
 export const Langiding = () => {
+  const query = useQueryURL();
+  const [products, setProducts] = React.useState([]);
+  React.useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      await axios({
+        url: `${environment.api}products`,
+        method: "GET",
+        params: {
+          search: query.get("search"),
+        },
+        // withCredentials: true,
+      })
+        .then(({ data: { data } }) => {
+          // Handle success
+          setProducts(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          // Handle error
+          console.log(err);
+        });
+    }
+    fetchData();
+  }, [query.get("search")]);
   return (
     <div>
       <div>
@@ -31,14 +60,35 @@ export const Langiding = () => {
       </div>
       <Divider />
       <div className="flex">
-        <div className="py-8 px-3 w-2/12 sticky top-20 h-full">
+        <div className="py-8 px-1 w-2/12 sticky top-20 h-full">
           <Categories />
         </div>
         <div className="py-8 px-3 w-9/12 min-h-screen">
           <div className="grid grid-cols-3 gap-4">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((el) => {
-              return <Product />;
-            })}
+            {
+              // [
+              //   {
+              //     id: "001",
+              //     name: "Roadster Women Solid Top",
+              //     price: 150000,
+              //     rank: 4.3,
+              //     rankers: 16,
+              //     images: [
+              //       "/images/products/product.jpg",
+              //       "/images/products/product.jpg",
+              //       "/images/products/product.jpg",
+              //     ],
+              //     quality: 100,
+              //   },
+              // ]
+              products.map((el: any) => {
+                return (
+                  <Product
+                    product={{ ...el, rank: 4.3, rankers: 16 }}
+                  />
+                );
+              })
+            }
           </div>
           <div className="p-16 flex justify-center items-center">
             <Button variant="contained">Load more</Button>

@@ -14,7 +14,7 @@ export const sumItems = (cartItems: any) => {
   let total = cartItems.reduce(
     (total: number, product: any) =>
       total +
-      product.pricing * product.soluong * ((100 - product.saleOff || 0) / 100),
+      product.price * product.soluong * ((100 - (product?.saleOff || 0)) / 100),
     0
   );
   return { itemCount, total };

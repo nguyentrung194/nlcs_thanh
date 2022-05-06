@@ -1,139 +1,81 @@
 import * as React from "react";
 import MenuItem from "@mui/material/MenuItem";
 import { useLocation, useNavigate } from "react-router-dom";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useQueryURL } from "../../hooks/use-query-url";
+import environment from "../../config";
+import axios from "axios";
 
 export const CustomAccordion = (props: any) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const handleClose = (el: any) => {
-    navigate(`/admin${props.to ? props.to : ""}${el.to ? el.to : ""}`);
-    // navigate(`../${el.to}`, { replace: true });
+  const query = useQueryURL();
+
+  const handleClick = (el: any) => {
+    if (el.name !== "All") {
+      query.set("search", el.name ? el.name : "");
+      navigate(`${location.pathname}?${query}`);
+    } else {
+      query.delete("search");
+      navigate(`${location.pathname}`);
+    }
   };
 
   return (
     <>
-      {props.items.length ? (
-        <div>
-          <Accordion
-            style={{ boxShadow: "none" }}
-            TransitionProps={{
-              timeout: 800,
-            }}
-            // expanded={true}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography
-                className={`w-full ${
-                  (props.to === "" && location.pathname === "/admin") ||
-                  (location.pathname.match(
-                    new RegExp(`\\/admin` + props.to + "*")
-                  ) &&
-                    props.to !== "")
-                    ? " text-green-500 "
-                    : ""
-                }`}
-              >
-                {props.name}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              {props.items.map((el: any) => {
-                return (
-                  <div
-                    className={`w-full ${
-                      (props.to === "" && location.pathname === "/admin") ||
-                      (location.pathname.match(
-                        new RegExp(`\\/admin` + props.to + el.to + "*")
-                      ) &&
-                        props.to !== "")
-                        ? " text-green-500 "
-                        : ""
-                    }`}
-                  >
-                    <MenuItem
-                      onClick={() => {
-                        handleClose(el);
-                      }}
-                    >
-                      {el.name}
-                    </MenuItem>
-                  </div>
-                );
-              })}
-            </AccordionDetails>
-          </Accordion>
-        </div>
-      ) : (
-        <div
-          className={`w-full ${
-            (props.to === "" && location.pathname === "/admin") ||
-            (location.pathname.match(new RegExp(`\\/admin` + props.to + "*")) &&
-              props.to !== "")
-              ? " text-green-500 "
-              : ""
-          }`}
+      <div
+        className={`w-full ${
+          query.get("search") === props.name ||
+          (!query.get("search") && props.name === "All")
+            ? " text-green-500 "
+            : ""
+        }`}
+      >
+        <MenuItem
+          onClick={() => {
+            handleClick(props);
+          }}
         >
-          <MenuItem
-            onClick={() => {
-              navigate(`/admin${props.to ? props.to : ""}`);
-              // navigate(`../${props.to}`, { replace: true });
-            }}
-          >
-            {props.name}
-          </MenuItem>
-        </div>
-      )}
+          {props.name}
+        </MenuItem>
+      </div>
     </>
   );
 };
 
-const navs = [
-  {
-    name: "Categories 1",
-    to: "",
-    items: [],
-  },
-  {
-    name: "Categories 2",
-    to: "",
-    items: [],
-  },
-  {
-    name: "Categories 3",
-    to: "",
-    items: [
-      { name: "Sub Categories 1", to: "" },
-      { name: "Sub Categories 2", to: "" },
-    ],
-  },
-  {
-    name: "Categories 4",
-    to: "",
-    items: [],
-  },
-];
-
 export const Categories = () => {
+  const [categories, setCategories] = React.useState([]);
+  React.useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      await axios({
+        url: `${environment.api}categories`,
+        method: "GET",
+        // withCredentials: true,
+      })
+        .then(({ data: { data } }) => {
+          // Handle success
+          setCategories(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          // Handle error
+          console.log(err);
+        });
+    }
+    fetchData();
+  }, []);
   const clientHeight = document.getElementById("nav-thanh")?.clientHeight || 80;
   const height = window.innerHeight;
   const [noTab, setNoTab] = React.useState(-1);
   return (
     <div
-      className="w-full space-y-4 pt-3 shadow-xl bg-white overflow-y-scroll scrollbar-custom"
+      className="w-full space-y-4 pt-3 pb-20 shadow-xl bg-white overflow-y-scroll scrollbar-custom"
       style={{
         height: height - clientHeight,
       }}
     >
-      {navs.map((el: any, index: number) => {
+      <CustomAccordion name="All" function={{ noTab, setNoTab, index: -1 }} />
+      {categories.map((el: any, index: number) => {
         return (
           <CustomAccordion {...el} function={{ noTab, setNoTab, index }} />
         );

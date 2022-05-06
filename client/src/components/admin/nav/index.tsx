@@ -103,26 +103,14 @@ const navs = [
     items: [],
   },
   {
-    name: "Bookings",
-    to: "/bookings",
+    name: "Products",
+    to: "/products",
     items: [],
   },
   {
-    name: "Rooms",
-    to: "/rooms",
-    items: [
-      { name: "All Rooms", to: "/all" },
-      { name: "Rooms Type", to: "/rooms-type" },
-    ],
-  },
-  {
-    name: "Reports",
-    to: "/reports",
-    items: [
-      { name: "Stocks", to: "/stocks" },
-      { name: "Expenses", to: "/expenses" },
-      { name: "Booking", to: "/booking" },
-    ],
+    name: "Categories",
+    to: "/categories",
+    items: [],
   },
   {
     name: "Customers",
@@ -130,11 +118,9 @@ const navs = [
     items: [],
   },
   {
-    name: "Payment",
-    to: "/payment",
-    items: [
-      { name: "Invocie List", to: "/invoices-list" },
-    ],
+    name: "Orders",
+    to: "/orders",
+    items: [],
   },
 ];
 

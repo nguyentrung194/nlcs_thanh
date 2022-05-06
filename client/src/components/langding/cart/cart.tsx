@@ -6,15 +6,56 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import { CardInCart } from "./card-in-cart";
-import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../../contexts/context";
 import { Typography } from "@mui/material";
+import axios from "axios";
+import environment from "../../../config";
+import { useToasts } from "react-toast-notifications";
 
 export const Cart = () => {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = React.useState(false);
   const { cartItems, itemCount, total, clearCart } =
     React.useContext(CartContext);
+  const { addToast } = useToasts();
+  async function fetchData() {
+    // You can await here
+    await axios({
+      url: `${environment.api}orders`,
+      method: "POST",
+      data: {
+        user: {
+          id: "5214b73b-f4df-4e9c-8850-91b9b6b9ba30",
+        },
+        products: [
+          ...cartItems.map((el: any) => {
+            return {
+              id: el.id,
+              quantity: el.soluong,
+            };
+          }),
+        ],
+        status: "Pending",
+      },
+      // withCredentials: true,
+    })
+      .then(({ data: { data } }) => {
+        // Handle success
+        addToast(`Success`, {
+          appearance: "success",
+          autoDismiss: true,
+        });
+        clearCart();
+        setIsOpen(false);
+      })
+      .catch((err) => {
+        addToast("Error!!", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+        // Handle error
+        console.log(err);
+      });
+  }
 
   return (
     <div>
@@ -50,12 +91,6 @@ export const Cart = () => {
           <Box
             // sx={{ minWidth: "500" }}
             role="presentation"
-            onClick={() => {
-              setIsOpen(false);
-            }}
-            onKeyDown={() => {
-              setIsOpen(false);
-            }}
           >
             <div
               className="space-x-3 flex justify-between items-center px-4 py-3"
@@ -73,7 +108,7 @@ export const Cart = () => {
               <div>
                 <Button
                   onClick={() => {
-                    navigate("/checkout");
+                    fetchData();
                   }}
                   type="button"
                   variant="outlined"
@@ -92,6 +127,11 @@ export const Cart = () => {
                   className="flex justify-center items-center flex-col space-y-2"
                   onClick={() => {
                     clearCart();
+                    setIsOpen(false);
+                  }}
+                  onKeyDown={() => {
+                    clearCart();
+                    setIsOpen(false);
                   }}
                   size="small"
                 >
@@ -101,6 +141,9 @@ export const Cart = () => {
               <div>
                 <Button
                   onClick={() => {
+                    setIsOpen(false);
+                  }}
+                  onKeyDown={() => {
                     setIsOpen(false);
                   }}
                   type="button"

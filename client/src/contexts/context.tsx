@@ -18,6 +18,9 @@ const initialState = {
 
 export const CartContextProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(CartReducer, initialState);
+  const isInCart = (product: any) => {
+    return !!state.cartItems?.find((item: any) => item.id === product.id);
+  };
 
   const increase = (payload: any) => {
     dispatch({ type: "INCREASE", payload });
@@ -56,6 +59,7 @@ export const CartContextProvider = ({ children }: any) => {
     clearCart,
     handleCheckout,
     addDeliveryMethod,
+    isInCart,
     ...state,
   };
 

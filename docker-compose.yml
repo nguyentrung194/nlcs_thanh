@@ -48,7 +48,7 @@ services:
     command: npm start
   mongo:
     image: mvertes/alpine-mongo
-    container_name: mongo
+    container_name: mongo-clothes
     ports:
       - '27017:27017'
     networks:

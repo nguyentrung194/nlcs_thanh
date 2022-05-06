@@ -3,11 +3,12 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea } from "@mui/material";
+import { Button } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import StarIcon from "@mui/icons-material/Star";
+import { CartContext } from "../../../contexts/context";
 
 const responsive = {
   desktop: {
@@ -27,12 +28,9 @@ const responsive = {
   },
 };
 
-export const Product = () => {
-  const images = [
-    "/images/products/product.jpg",
-    "/images/products/product.jpg",
-    "/images/products/product.jpg",
-  ];
+export const Product = ({ product }: any) => {
+  const { increase, decrease, cartItems, addProduct, isInCart } =
+    React.useContext(CartContext);
   const [isShown, setIsShown] = React.useState(false);
   const [isFavorite, setIsFavorite] = React.useState(false);
   return (
@@ -61,7 +59,7 @@ export const Product = () => {
           dotListClass="custom-dot-list-style"
           itemClass="carousel-item-padding-40-px"
         >
-          {images.map((el) => {
+          {product.images.map((el: any) => {
             return (
               <CardMedia
                 component="img"
@@ -74,11 +72,11 @@ export const Product = () => {
         </Carousel>
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            300 pc(s)
+            {product.quality} pc(s)
           </Typography>
           <div className="flex justify-between items-center">
             <Typography gutterBottom variant="subtitle1" component="div">
-              Roadster Women Solid Top
+              {product.name}
             </Typography>
             <div
               className={`bg-black/20 hover:bg-black/40 rounded-full h-full ${
@@ -98,23 +96,55 @@ export const Product = () => {
           </div>
           <Typography className="flex justify-between py-2" variant="body2">
             <span className="flex justify-center items-center  space-x-1">
-              <strong>150.000 VND</strong>
+              <strong>{`${product.price.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
+              })}`}</strong>
             </span>
             <span className="flex justify-center items-center space-x-1">
-              <StarIcon className="text-yellow-300" /> <strong>4.3</strong> (16)
+              <StarIcon className="text-yellow-300" />{" "}
+              <strong>{product.avgStar}</strong> ({product.countReviews})
             </span>
           </Typography>
-          <div className="w-full bg-green-200/50 rounded-full py-2 px-1 m-1 flex justify-around items-center">
-            <Button className="p-1 text-center" variant="text">
-              +
-            </Button>
-            <Typography className="p-0 text-center" variant="inherit">
-              1
-            </Typography>
-            <Button className="p-1 text-center" variant="text">
-              -
-            </Button>
-          </div>
+          {!isInCart(product) ? (
+            <div className="w-full bg-green-200/50 rounded-full py-2 px-1 m-1 flex justify-around items-center">
+              <Button
+                onClick={() => {
+                  addProduct(product);
+                }}
+                className="p-1 text-center"
+                variant="text"
+              >
+                Add to cart
+              </Button>
+            </div>
+          ) : (
+            <div className="w-full bg-green-200/50 rounded-full py-2 px-1 m-1 flex justify-around items-center">
+              <Button
+                onClick={() => {
+                  increase(product);
+                }}
+                className="p-1 text-center"
+                variant="text"
+              >
+                +
+              </Button>
+              <Typography className="p-0 text-center" variant="inherit">
+                {cartItems[
+                  cartItems.findIndex((item: any) => item.id === product.id)
+                ]?.soluong || 0}
+              </Typography>
+              <Button
+                onClick={() => {
+                  decrease(product);
+                }}
+                className="p-1 text-center"
+                variant="text"
+              >
+                -
+              </Button>
+            </div>
+          )}
         </CardContent>
         {/* </CardActionArea> */}
       </Card>
