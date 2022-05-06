@@ -11,9 +11,13 @@ import { useFormik } from "formik";
 import { useToasts } from "react-toast-notifications";
 import axios from "axios";
 import environment from "../../config";
+import { useNavigate } from "react-router-dom";
+import { CartContext } from "../../contexts/context";
 
 export const Login = () => {
   const { addToast } = useToasts();
+  const navigate = useNavigate();
+  const { login } = React.useContext(CartContext);
 
   const formik = useFormik({
     initialValues: {
@@ -30,10 +34,17 @@ export const Login = () => {
           data: {
             ...values,
           },
+          withCredentials: true,
         })
           .then(({ data }) => {
             // Handle success
             console.log(data);
+            login({ isLogin: true });
+            if (data.data.roles.includes("Admin")) {
+              navigate("/admin");
+            } else {
+              navigate("/home");
+            }
             addToast(`Success`, {
               appearance: "success",
               autoDismiss: true,

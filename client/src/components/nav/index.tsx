@@ -6,6 +6,7 @@ import environment from "../../config";
 // import { PhongContext } from "../../contexts/reducer";
 import { Link, useLocation } from "react-router-dom";
 import { classNames } from "../../common/lib";
+import { CartContext } from "../../contexts/context";
 
 const navigation = [
   { name: "Home", to: "/home", current: false },
@@ -13,6 +14,7 @@ const navigation = [
 ];
 
 export const Nav = () => {
+  const { isLogin, login } = useContext(CartContext);
   const location = useLocation();
   console.log(location.pathname);
   return (
@@ -78,7 +80,7 @@ export const Nav = () => {
                   </div>
                 </div>
               </div>
-              {false ? (
+              {!!isLogin ? (
                 <div
                   className="absolute inset-y-0 right-0 flex items-center 
               pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
@@ -163,6 +165,7 @@ export const Nav = () => {
                                 })
                                   .then((res) => {
                                     console.log(res);
+                                    login({ isLogin: false });
                                   })
                                   .catch((err) => {
                                     console.log(err);

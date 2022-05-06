@@ -22,11 +22,13 @@ export const sumItems = (cartItems: any) => {
 
 export const CartReducer = (state: any, action: any) => {
   switch (action.type) {
-    case "ADD_DELIVERY_METHOD":
+    case "LOGIN":
       return {
         ...state,
-        deliveryMethod: action.payload,
+        ...sumItems(state.cartItems),
+        isLogin: action.payload.isLogin,
       };
+
     case "ADD_ITEM":
       if (!state.cartItems.find((item: any) => item.id === action.payload.id)) {
         state.cartItems.push({

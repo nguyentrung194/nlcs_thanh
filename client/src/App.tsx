@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { NavLayout } from "./layouts/nav";
-import { CartContext, CartContextProvider } from "./contexts/context";
+import { CartContext } from "./contexts/context";
 import "./styles/index.css";
 import { HomeRoute } from "./route/home.route";
 // import { DetailsHotelRoute } from "./route/details-hotel.route";
@@ -11,59 +11,52 @@ import axios from "axios";
 import environment from "./config";
 
 function App() {
-  // const {} = useContext(CartContext);
-  const [isLogin, setIsLogin] = React.useState(false);
+  const { isLogin, login } = useContext(CartContext);
   React.useEffect(() => {
     async function fetchData() {
       // You can await here
       await axios({
         url: `${environment.api}users/me`,
         method: "GET",
-        // headers: {
-        // Authorization: "Bearer ",
-        // },
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
         withCredentials: true,
       })
         .then(({ data: { data } }: { data: { data: any } }) => {
           // Handle success
           console.log(data);
-          setIsLogin(true);
+          login({ isLogin: true });
         })
         .catch((err) => {
           // Handle error
+          login({ isLogin: false });
           console.log(err);
         });
     }
     fetchData();
   }, []);
 
-  if (!!isLogin) {
+  console.log(isLogin);
+  if (!isLogin) {
     return (
-      <CartContextProvider>
-        <Routes>
-          <Route element={<NavLayout />}>
-            <Route path="/" element={<Navigate to="/home" replace={true} />} />
-            <Route path="/home/*" element={<HomeRoute />} />
-          </Route>
-        </Routes>
-      </CartContextProvider>
+      <Routes>
+        <Route element={<NavLayout />}>
+          <Route path="/" element={<Navigate to="/home" replace={true} />} />
+          <Route path="/home/*" element={<HomeRoute />} />
+          <Route path="/*" element={<Navigate to="/" replace={true} />} />
+        </Route>
+      </Routes>
     );
   } else {
     return (
-      <CartContextProvider>
-        <Routes>
-          <Route element={<NavLayout />}>
-            <Route path="/" element={<Navigate to="/home" replace={true} />} />
-            <Route path="/home/*" element={<HomeRoute />} />
-            <Route element={<AdminLayout />}>
-              <Route path="/admin/*" element={<AdminRoute />} />
-            </Route>
+      <Routes>
+        <Route element={<NavLayout />}>
+          <Route path="/" element={<Navigate to="/home" replace={true} />} />
+          <Route path="/home/*" element={<HomeRoute />} />
+          <Route element={<AdminLayout />}>
+            <Route path="/admin/*" element={<AdminRoute />} />
           </Route>
-        </Routes>
-      </CartContextProvider>
+          <Route path="/*" element={<Navigate to="/" replace={true} />} />
+        </Route>
+      </Routes>
     );
   }
 }

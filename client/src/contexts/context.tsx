@@ -1,25 +1,25 @@
 import React, { createContext, useReducer } from "react";
 import { CartReducer, sumItems } from "./reducer";
 
-export const CartContext = createContext<any>(null);
+export const CartContext = createContext<any>({});
 
 const storage = localStorage.getItem("cart")
   ? JSON.parse(localStorage.getItem("cart") as string)
   : [];
-const deliveryMethod = localStorage.getItem("deliveryMethod")
-  ? JSON.parse(localStorage.getItem("deliveryMethod") as string)
-  : { fee: 0, discount: 0 };
 const initialState = {
   cartItems: storage,
   ...sumItems(storage),
-  checkout: false,
-  deliveryMethod: deliveryMethod,
+  isLogin: false,
 };
 
 export const CartContextProvider = ({ children }: any) => {
   const [state, dispatch] = useReducer(CartReducer, initialState);
   const isInCart = (product: any) => {
     return !!state.cartItems?.find((item: any) => item.id === product.id);
+  };
+
+  const login = (payload: any) => {
+    dispatch({ type: "LOGIN", payload });
   };
 
   const increase = (payload: any) => {
@@ -47,10 +47,6 @@ export const CartContextProvider = ({ children }: any) => {
     dispatch({ type: "CHECKOUT" });
   };
 
-  const addDeliveryMethod = (payload: any) => {
-    dispatch({ type: "ADD_DELIVERY_METHOD", payload });
-  };
-
   const contextValues = {
     removeProduct,
     addProduct,
@@ -58,8 +54,8 @@ export const CartContextProvider = ({ children }: any) => {
     decrease,
     clearCart,
     handleCheckout,
-    addDeliveryMethod,
     isInCart,
+    login,
     ...state,
   };
 
