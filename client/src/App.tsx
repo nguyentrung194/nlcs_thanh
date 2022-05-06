@@ -40,7 +40,7 @@ function App() {
     fetchData();
   }, []);
 
-  if (!isLogin) {
+  if (!!isLogin) {
     return (
       <CartContextProvider>
         <Routes>
