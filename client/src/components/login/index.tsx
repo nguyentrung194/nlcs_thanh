@@ -39,10 +39,11 @@ export const Login = () => {
           .then(({ data }) => {
             // Handle success
             console.log(data);
-            login({ isLogin: true });
             if (data.data.roles.includes("Admin")) {
+              login({ isLogin: true, isAdmin: true });
               navigate("/admin");
             } else {
+              login({ isLogin: true, isAdmin: false });
               navigate("/home");
             }
             addToast(`Success`, {
