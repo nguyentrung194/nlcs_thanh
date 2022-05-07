@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { NavLayout } from "./layouts/nav";
 import { CartContext } from "./contexts/context";
@@ -11,7 +11,7 @@ import axios from "axios";
 import environment from "./config";
 
 function App() {
-  const { isLogin, login } = useContext(CartContext);
+  const { isLogin, login, isAdmin } = useContext(CartContext);
   React.useEffect(() => {
     async function fetchData() {
       // You can await here
@@ -23,7 +23,11 @@ function App() {
         .then(({ data: { data } }: { data: { data: any } }) => {
           // Handle success
           console.log(data);
-          login({ isLogin: true });
+          if (data.roles.includes("Admin")) {
+            login({ isLogin: true, isAdmin: true });
+          } else {
+            login({ isLogin: true, isAdmin: false });
+          }
         })
         .catch((err) => {
           // Handle error
@@ -35,7 +39,7 @@ function App() {
   }, []);
 
   console.log(isLogin);
-  if (!isLogin) {
+  if (!isAdmin) {
     return (
       <Routes>
         <Route element={<NavLayout />}>

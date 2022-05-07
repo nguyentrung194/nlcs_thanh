@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import axios from "axios";
@@ -8,15 +8,18 @@ import { Link, useLocation } from "react-router-dom";
 import { classNames } from "../../common/lib";
 import { CartContext } from "../../contexts/context";
 
-const navigation = [
+const navigations = [
   { name: "Home", to: "/home", current: false },
   { name: "Admin", to: "/admin", current: false },
 ];
 
 export const Nav = () => {
-  const { isLogin, login } = useContext(CartContext);
+  const { isLogin, login, isAdmin } = useContext(CartContext);
   const location = useLocation();
   console.log(location.pathname);
+  const navigation = isAdmin
+    ? navigations
+    : navigations.filter((el) => el.name !== "Admin");
   return (
     <Disclosure
       as="nav"
