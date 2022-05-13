@@ -8,5 +8,5 @@ export class CreateCategoryDto {
   public image: string;
 
   @IsString()
-  status: 'Active' | 'Inactive';
+  status: string;
 }

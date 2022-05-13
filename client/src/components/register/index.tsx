@@ -13,9 +13,13 @@ import { useToasts } from "react-toast-notifications";
 import axios from "axios";
 import environment from "../../config";
 import { storage } from "../../hooks/use-firebase";
+import { CartContext } from "../../contexts/context";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
   const { addToast } = useToasts();
+  const navigate = useNavigate();
+  const { login } = React.useContext(CartContext);
 
   const formik = useFormik({
     initialValues: {
@@ -38,6 +42,13 @@ export const Register = () => {
         })
           .then(({ data }) => {
             // Handle success
+            if (data.data.roles.includes("Admin")) {
+              login({ isLogin: true, isAdmin: true, user: data.data });
+              navigate("/admin");
+            } else {
+              login({ isLogin: true, isAdmin: false, user: data.data });
+              navigate("/home");
+            }
             addToast(`Success`, {
               appearance: "success",
               autoDismiss: true,

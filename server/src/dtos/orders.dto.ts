@@ -9,5 +9,5 @@ export class CreateOrderDto {
   products: Array<Item>;
 
   @IsString()
-  status: 'Complete' | 'Pending';
+  status: string;
 }

@@ -24,9 +24,9 @@ function App() {
           // Handle success
           console.log(data);
           if (data.roles.includes("Admin")) {
-            login({ isLogin: true, isAdmin: true });
+            login({ isLogin: true, isAdmin: true, user: data });
           } else {
-            login({ isLogin: true, isAdmin: false });
+            login({ isLogin: true, isAdmin: false, user: data });
           }
         })
         .catch((err) => {

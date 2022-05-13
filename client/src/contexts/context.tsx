@@ -11,6 +11,7 @@ const initialState = {
   ...sumItems(storage),
   isLogin: false,
   isAdmin: false,
+  user: {},
 };
 
 export const CartContextProvider = ({ children }: any) => {

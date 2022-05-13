@@ -5,8 +5,10 @@ import axios from "axios";
 import environment from "../../config";
 // import { PhongContext } from "../../contexts/reducer";
 import { Link, useLocation } from "react-router-dom";
+import { Avatar } from "@mui/material";
 import { classNames } from "../../common/lib";
 import { CartContext } from "../../contexts/context";
+import { stringAvatar } from "../../common/lib";
 
 const navigations = [
   { name: "Home", to: "/home", current: false },
@@ -14,12 +16,13 @@ const navigations = [
 ];
 
 export const Nav = () => {
-  const { isLogin, login, isAdmin } = useContext(CartContext);
+  const { isLogin, login, user, isAdmin } = useContext(CartContext);
   const location = useLocation();
   console.log(location.pathname);
   const navigation = isAdmin
     ? navigations
     : navigations.filter((el) => el.name !== "Admin");
+  console.log(user);
   return (
     <Disclosure
       as="nav"
@@ -109,10 +112,16 @@ export const Nav = () => {
                     focus:ring-black"
                       >
                         <span className="sr-only">Open user menu</span>
-                        <img
+                        <Avatar
                           className="h-8 w-8 rounded-full"
-                          src={"/logo192.png"}
-                          alt=""
+                          {...stringAvatar(
+                            { name: user.name, url: user.image },
+                            {
+                              width: 40,
+                              height: 40,
+                            }
+                          )}
+                          variant="circular"
                         />
                       </Menu.Button>
                     </div>
@@ -136,19 +145,6 @@ export const Nav = () => {
                               )}
                             >
                               Your Profile
-                            </Link>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <Link
-                              to="/home/settings"
-                              className={classNames(
-                                active ? "bg-gray-100" : "",
-                                "block px-4 py-2 text-sm text-gray-700"
-                              )}
-                            >
-                              Settings
                             </Link>
                           )}
                         </Menu.Item>
@@ -199,10 +195,16 @@ export const Nav = () => {
                     focus:ring-black"
                       >
                         <span className="sr-only">Open user menu</span>
-                        <img
+                        <Avatar
                           className="h-8 w-8 rounded-full"
-                          src={"/logo192.png"}
-                          alt=""
+                          {...stringAvatar(
+                            { name: "Normal", url: "" },
+                            {
+                              width: 40,
+                              height: 40,
+                            }
+                          )}
+                          variant="circular"
                         />
                       </Menu.Button>
                     </div>
