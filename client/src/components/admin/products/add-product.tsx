@@ -190,24 +190,17 @@ export const AddProduct = () => {
                   );
                 })}
               </FormControl>
-              <div className="col-span-1 flex items-center">
-                <FormControl fullWidth>
-                  <InputLabel id="Select-Product-Type-label">
-                    Select Product Unit
-                  </InputLabel>
-                  <Select
-                    labelId="Select-Product-Type-label"
-                    id="Select-Product-Type"
-                    label="Select Product Type"
-                    value={formik.values.unit}
-                    onChange={(event: SelectChangeEvent) => {
-                      formik.setFieldValue("unit", event.target.value);
-                    }}
-                  >
-                    <MenuItem value={"pc(s)"}>pc(s)</MenuItem>
-                  </Select>
-                </FormControl>
-              </div>
+              <FormControl variant="standard" className="col-span-1">
+                <TextField
+                  id="Unit"
+                  value={formik.values.unit}
+                  onChange={formik.handleChange}
+                  label="Unit"
+                  name="unit"
+                  required
+                  type="text"
+                />
+              </FormControl>
               <FormControl variant="standard" className="col-span-1">
                 <TextField
                   id="Price"
