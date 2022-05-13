@@ -23,6 +23,7 @@ export class CreateProductDto {
   @IsArray()
   public images: Array<string>;
 
+  @IsArray()
   public reviews: Array<Review>;
 
   @IsString()

@@ -14,7 +14,7 @@ import { useToasts } from "react-toast-notifications";
 
 export const Cart = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { cartItems, itemCount, total, clearCart } =
+  const { cartItems, itemCount, total, clearCart, user } =
     React.useContext(CartContext);
   const { addToast } = useToasts();
   async function fetchData() {
@@ -24,7 +24,7 @@ export const Cart = () => {
       method: "POST",
       data: {
         user: {
-          id: "5214b73b-f4df-4e9c-8850-91b9b6b9ba30",
+          id: user.id,
         },
         products: [
           ...cartItems.map((el: any) => {

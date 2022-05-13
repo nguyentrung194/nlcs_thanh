@@ -80,12 +80,14 @@ export const CartReducer = (state: any, action: any) => {
       };
     case "CHECKOUT":
       return {
+        ...state,
         cartItems: [],
         checkout: true,
         ...sumItems([]),
       };
     case "CLEAR":
       return {
+        ...state,
         cartItems: [],
         ...sumItems([]),
       };

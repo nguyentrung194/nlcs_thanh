@@ -66,7 +66,7 @@ export const Card2 = (props: any) => {
         <div className="flex justify-between">
           <div>
             <Typography variant="h6" component="div">
-              Top Selected Package
+              Top Products
             </Typography>
             <Typography component="div">
               In last 30 days top selected package.
@@ -91,7 +91,7 @@ export const Card3 = (props: any) => {
             Sales Revenue
           </Typography>
           <Typography component="div">
-            In last 30 days revenue from rent.
+            In last 30 days revenue from sales.
           </Typography>
         </div>
         <div className="py-4 flex justify-between">

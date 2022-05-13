@@ -5,22 +5,22 @@ import { BasicSelect } from "./common/common";
 export const Admin = () => {
   const data = [
     {
-      title: "Total Booking",
+      title: "Total Orders",
       num: 11230,
       this_month: 1913,
-      this_week: 1125,
+      this_week: 353,
     },
     {
-      title: "Rooms Available",
+      title: "Products Available",
       num: 312,
-      this_month: 913,
-      this_week: 125,
+      this_month: 200,
+      this_week: 112,
     },
     {
-      title: "Expenses",
-      num: 79358,
-      this_month: 3540,
-      this_week: 1259,
+      title: "Customers",
+      num: 1221,
+      this_month: 212,
+      this_week: 40,
     },
   ];
 

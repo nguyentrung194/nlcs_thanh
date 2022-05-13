@@ -30,7 +30,6 @@ export const Langiding = () => {
         .catch((err) => {
           console.log(err);
           // Handle error
-          console.log(err);
         });
     }
     fetchData();
@@ -66,21 +65,6 @@ export const Langiding = () => {
         <div className="py-8 px-3 w-9/12 min-h-screen">
           <div className="grid grid-cols-3 gap-4">
             {
-              // [
-              //   {
-              //     id: "001",
-              //     name: "Roadster Women Solid Top",
-              //     price: 150000,
-              //     rank: 4.3,
-              //     rankers: 16,
-              //     images: [
-              //       "/images/products/product.jpg",
-              //       "/images/products/product.jpg",
-              //       "/images/products/product.jpg",
-              //     ],
-              //     quality: 100,
-              //   },
-              // ]
               products.map((el: any) => {
                 return (
                   <Product
