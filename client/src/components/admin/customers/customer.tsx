@@ -7,7 +7,7 @@ import environment from "../../../config";
 import axios from "axios";
 
 export const Customer = () => {
-  const [users, setCategories] = React.useState<any[]>([]);
+  const [users, setUsers] = React.useState<any[]>([]);
   React.useEffect(() => {
     async function fetchData() {
       // You can await here
@@ -18,7 +18,7 @@ export const Customer = () => {
       })
         .then(({ data: { data: users } }: { data: { data: any[] } }) => {
           // Handle success
-          setCategories(
+          setUsers(
             users.map((value) => {
               Object.keys(value).forEach((k: any) => {
                 if (typeof value[k] === "object") {
